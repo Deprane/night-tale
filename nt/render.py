@@ -115,7 +115,7 @@ def frame(s,t,d,surf):
    for(D,I)in zip(E,E[1:]):
     if D[0]<=t<=I[0]:l=ease((t-D[0])/max(1e-06,I[0]-D[0]));f,g=D[1]+(I[1]-D[1])*l,D[2]+(I[2]-D[2])*l;break
   if'to'in G:AX=min(1,t/d);f,g=f+(G['to'][0]-f)*AX,g+(G['to'][1]-g)*AX
-  AI={'sack':lambda:C.sack,'stalker':lambda:C.stalker(t),'antlered':lambda:C.antlered(t),'chupacabras':lambda:C.chupacabras(t,G.get('twist'),G.get('crouch')),'chupa_perch':lambda:C.chupa_perch(t,G.get('part','back'),G.get('climb'),G.get('twist')),'charro':lambda:C.charro(t),'nahual':lambda:C.nahual(t),'lechuza':lambda:C.lechuza(t),'cadejo':lambda:C.cadejo(t),'red_eyes':lambda:lambda*A:None,'troca':lambda:C.troca(t),'claw_tips':lambda:C.claw_tips(t),'tv':lambda:C.tv(t,G.get('chyron',''),G.get('banner','ÚLTIMA HORA'),G.get('place',''),tuple(G.get('headline',['TITULAR',''])),G.get('inset','')),'llorona':lambda:C.llorona(t,G.get('face',False)),'carved_post':lambda:C.carved_post(G.get('text','WHEN HE|SOUNDS|FAR...').split('|'))}[G['type']]();A9=.0
+  AI={'sack':lambda:C.sack,'stalker':lambda:C.stalker(t),'antlered':lambda:C.antlered(t),'chupacabras':lambda:C.chupacabras(t,G.get('twist'),G.get('crouch')),'chupa_perch':lambda:C.chupa_perch(t,G.get('part','back'),G.get('climb'),G.get('twist')),'charro':lambda:C.charro(t),'nahual':lambda:C.nahual(t),'nahuala':lambda:C.nahuala(t),'lechuza':lambda:C.lechuza(t),'cadejo':lambda:C.cadejo(t),'red_eyes':lambda:lambda*A:None,'troca':lambda:C.troca(t),'claw_tips':lambda:C.claw_tips(t),'tv':lambda:C.tv(t,G.get('chyron',''),G.get('banner','ÚLTIMA HORA'),G.get('place',''),tuple(G.get('headline',['TITULAR',''])),G.get('inset','')),'llorona':lambda:C.llorona(t,G.get('face',False)),'carved_post':lambda:C.carved_post(G.get('text','WHEN HE|SOUNDS|FAR...').split('|'))}[G['type']]();A9=.0
   if'pose'in G:
    E=G['pose'];A9,AJ=E[-1][1],E[-1][2]
    if t<E[0][0]:A9,AJ=E[0][1],E[0][2]
@@ -413,7 +413,7 @@ def render_shot(args):
  os.replace(J,B);return B
 LOCS=['cerro_dia','casa_int','rancho','lab','field','fence_forest','deep_forest','farmhouse','snow_woods','cdmx_street']
 WHO=['kid','girl','worker','beto','abuelo']
-PROPS=['sack','stalker','antlered','llorona','carved_post','chupacabras','charro','nahual','lechuza','cadejo','red_eyes','troca','chupa_perch','claw_tips','tv']
+PROPS=['nahuala','sack','stalker','antlered','llorona','carved_post','chupacabras','charro','nahual','lechuza','cadejo','red_eyes','troca','chupa_perch','claw_tips','tv']
 def validate(shots):
  A=[]
  for(B,D)in enumerate(shots):

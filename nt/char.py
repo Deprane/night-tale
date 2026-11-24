@@ -477,3 +477,63 @@ def tv(t=.0,chyron='',banner='ÚLTIMA HORA',place='',headline=('TITULAR',''),ins
   for K in range(3):A.drawCircle(235,-900+K*90,22,paint(col('1c1816')));A.drawCircle(235,-900+K*90,22,paint(INK,255,6))
   A.drawLine(-80,-1000,-200,-1220,paint(INK,255,8));A.drawLine(60,-1000,180,-1240,paint(INK,255,8));A.restore()
  return B
+
+def nahuala(t=.0):
+ def A(cv,x,y,ppm):
+  c=cv;s=ppm*2.35/1000;c.save();c.translate(x,y);c.scale(s,s)
+  sw=math.sin(t*1.2)*8;br=math.sin(t*2.1)*6;HY=-860+br
+  skin,skin2,skd=col('a9a497'),col('6f6a5e'),col('3e3a33');hair=col('070607')
+  c.drawOval(skia.Rect(-300,-1050,300,60),skia.Paint(AntiAlias=True,Color=skia.ColorSetARGB(55,230,180,40),MaskFilter=skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle,90)))
+  # pelo de atras hasta la cintura
+  P=skia.Path();P.moveTo(-120,HY-90);P.cubicTo(-230,HY+40,-250,-560,-215+sw,-380)
+  for i in range(10):P.lineTo(-215+i*48+sw*(1-i/10),-380+(45 if i%2 else -5)+math.sin(t*2+i)*10)
+  P.cubicTo(250,-560,230,HY+40,120,HY-90);P.close();c.drawPath(P,paint(hair))
+  # patas de animal
+  for B in(-1,1):
+   L=skia.Path();L.moveTo(B*55,-440);L.lineTo(B*120,-260);L.lineTo(B*65,-110);L.lineTo(B*100,0)
+   c.drawPath(L,paint(INK,255,58));c.drawPath(L,paint(skd,255,42))
+   for k in(-1,0,1):c.drawPath(_q((B*100,0),(B*100+k*22+B*20,4),(B*100+k*30+B*34,22)),paint(col('d8d0bc'),255,8))
+  # enagua rasgada
+  S=skia.Path();S.moveTo(-110,-650);S.lineTo(110,-650);S.quadTo(170,-520,185+sw,-360)
+  for i in range(9):S.lineTo(185-(i+1)*41+sw*(1-i/9),-360+(55 if i%2 else -5)+math.sin(t*3+i)*9)
+  S.quadTo(-160,-520,-110,-650);S.close();c.drawPath(S,_lin(0,-650,0,-330,'2b2a2e','0b0a0c'));c.drawPath(S,paint(INK,255,10))
+  # brazos largos hasta las rodillas
+  for B in(-1,1):
+   hx=B*230+sw*B*.5;hy=-250+math.sin(t*1.7+B)*10
+   Ar=skia.Path();Ar.moveTo(B*140,-700+br);Ar.cubicTo(B*230,-640,B*250,-460,hx,hy)
+   c.drawPath(Ar,paint(INK,255,46));c.drawPath(Ar,paint(skin2,255,30))
+   for k in range(4):
+    e=(hx+B*(k-1.5)*30,hy+150-abs(k-1.5)*18)
+    c.drawPath(_q((hx,hy),(hx+B*(k-1.5)*10,hy+80),e),paint(INK,255,20));c.drawPath(_q((hx,hy),(hx+B*(k-1.5)*10,hy+80),e),paint(col('e6dfca'),255,10))
+  # rebozo sobre los hombros
+  R=skia.Path();R.moveTo(-185,-730+br);R.quadTo(0,-790+br,185,-730+br);R.lineTo(120+sw,-490);R.lineTo(0,-440);R.lineTo(-120+sw,-490);R.close()
+  c.drawPath(R,_lin(-185,0,185,0,'4a1a28','1a0810'))
+  for i in range(-4,5):c.drawLine(i*40,-760+br,i*26+sw*.4,-460,paint(col('6e2a3c'),120,5))
+  c.drawPath(R,paint(INK,255,10))
+  for i in range(13):fx=-120+i*20;fy=-490+(1-abs(fx)/120)*50;c.drawLine(fx+sw,fy,fx+sw*1.3,fy+50,paint(col('2a0c16'),255,5))
+  # cabeza
+  c.save();c.translate(0,HY);c.rotate(-6+math.sin(t*.9)*3)
+  for B in(-1,1):
+   E=_p((B*45,-80),(B*120,-110),(B*95,-215));c.drawPath(E,paint(skd));c.drawPath(E,paint(INK,255,8));c.drawPath(_p((B*65,-95),(B*105,-115),(B*92,-180)),paint(col('5a2a2a')))
+  F=skia.Path();F.moveTo(-85,-60);F.cubicTo(-100,-140,100,-140,85,-60);F.quadTo(95,40,60,105);F.quadTo(0,140,-60,105);F.quadTo(-95,40,-85,-60);F.close()
+  c.drawPath(F,skia.Paint(AntiAlias=True,Shader=skia.GradientShader.MakeRadial(skia.Point(-20,-40),170,[c4(skin),c4(skin2),c4(skd)],[0,.6,1])));c.drawPath(F,paint(INK,255,9))
+  for B in(-1,1):c.drawOval(skia.Rect(B*38-30,-50,B*38+30,0),paint(col('1a1512'),220))
+  op=10+12*max(0,math.sin(t*1.6))
+  M=skia.Path();M.moveTo(-78,40);M.quadTo(0,70,78,40);M.quadTo(0,70+op*3,-78,40);M.close();c.drawPath(M,paint(col('160303')))
+  c.save();c.clipPath(M,doAntiAlias=True)
+  for i in range(14):tx=-74+i*11.4;c.drawPath(_p((tx-4,40),(tx+4,40),(tx,60+i%2*6)),paint(col('ece5cf')));c.drawPath(_p((tx-3,70+op*2),(tx+5,70+op*2),(tx+1,54+op)),paint(col('dcd4bc')))
+  c.restore();c.drawPath(M,paint(INK,255,6))
+  for B in(-1,1):c.drawPath(_q((B*78,40),(B*92,30),(B*96,14)),paint(INK,255,5))
+  # pelo de enfrente (abierto en medio para los ojos)
+  for B in(-1,1):
+   for k in range(6):
+    x0=B*(10+k*20);Hh=skia.Path();Hh.moveTo(x0*.6,-125);Hh.cubicTo(B*(25+k*24),-60,B*(30+k*26)+sw*.6,120,B*(28+k*30)+sw,300+k*25+math.sin(t*1.5+k)*10)
+    c.drawPath(Hh,paint(hair,255,22 if k>1 else 14))
+  blink=t%3.1<.08
+  for B in(-1,1):
+   ex=B*40
+   if blink:c.drawLine(ex-18,-25,ex+18,-25,paint(col('ffd21f'),255,5));continue
+   c.drawCircle(ex,-25,30,skia.Paint(AntiAlias=True,Color=skia.ColorSetARGB(170,255,200,0),MaskFilter=skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle,16)))
+   Ey=skia.Path();Ey.moveTo(ex-B*20,-34);Ey.quadTo(ex,-46,ex+B*22,-22);Ey.quadTo(ex,-12,ex-B*20,-34);Ey.close();c.drawPath(Ey,paint(col('ffd21f')));c.drawLine(ex,-38,ex,-16,paint(INK,255,5))
+  c.restore();c.restore()
+ return A
