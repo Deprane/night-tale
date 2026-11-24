@@ -432,14 +432,14 @@ def validate(shots):
  if A:sys.exit('INVALID shots.json:\n  '+'\n  '.join(A))
 def ambience(dur,path):A=dur;subprocess.run(['ffmpeg','-y','-v','error','-f','lavfi','-i',f"anoisesrc=color=brown:amplitude=0.35:d={A},lowpass=f=300",'-f','lavfi','-i',f"sine=f=55:d={A},volume=0.25,tremolo=f=0.3:d=0.6",'-filter_complex',f"[0][1]amix=2,afade=in:d=1,afade=out:st={max(0,A-1)}:d=1,volume=1.4[a]",'-map','[a]',path],check=True)
 def main():
- B=argparse.ArgumentParser();B.add_argument('shots');B.add_argument('out');B.add_argument('--audio');B.add_argument('--preview',action='store_true');B.add_argument('--silent',action='store_true');B.add_argument('--jobs',type=int,default=os.cpu_count());A=B.parse_args();E=json.load(open(A.shots));D=E['shots']if isinstance(E,dict)else E;validate(D);C=os.path.splitext(A.out)[0]+'_work';os.makedirs(C,exist_ok=True)
+ B=argparse.ArgumentParser();B.add_argument('shots');B.add_argument('out');B.add_argument('--audio');B.add_argument('--preview',action='store_true');B.add_argument('--silent',action='store_true');B.add_argument('--amb',action='store_true');B.add_argument('--jobs',type=int,default=os.cpu_count());A=B.parse_args();E=json.load(open(A.shots));D=E['shots']if isinstance(E,dict)else E;validate(D);C=os.path.splitext(A.out)[0]+'_work';os.makedirs(C,exist_ok=True)
  if A.preview:
   O=skia.Surface(W,H)
   for(P,G)in enumerate(D):I=dur_of(G);Q=frame(G,I*.6,I,O);skia.Image.fromarray(Q,colorType=skia.kRGBA_8888_ColorType).save(f"{C}/prev{P:03d}.png")
   J=min(6,len(D));R=-(-len(D)//J);subprocess.run(['ffmpeg','-y','-v','error','-framerate','1','-i',f"{C}/prev%03d.png",'-vf',f"scale=200:-1,tile={J}x{R}",'-frames:v','1',A.out],check=True);print(A.out);return
  with Pool(A.jobs)as S:T=S.map(render_shot,[(A,B,C)for(A,B)in enumerate(D)],chunksize=1)
  K=f"{C}/list.txt";open(K,'w').write(''.join(f"file '{os.path.abspath(A)}'\n"for A in T));F=sum(dur_of(A)for A in D)
- if not A.audio and not A.silent:A.audio=f"{C}/amb.m4a";ambience(F,A.audio)
+ if not A.audio and A.amb:A.audio=f"{C}/amb.m4a";ambience(F,A.audio)
  L=A.out if not A.audio else f"{C}/silent.mp4";subprocess.run(['ffmpeg','-y','-v','error','-f','concat','-safe','0','-i',K,'-c','copy',L],check=True)
  if A.audio:subprocess.run(['ffmpeg','-y','-v','error','-i',L,'-i',A.audio,'-map','0:v','-map','1:a','-c:v','copy','-c:a','aac','-shortest',A.out],check=True)
  M=os.path.splitext(A.out)[0]+'_sheet.jpg';N=max(1,int(F*1.5));subprocess.run(['ffmpeg','-y','-v','error','-i',A.out,'-vf',f"fps=1.5,scale=150:-1,tile={min(10,N)}x{-(-N//10)}",'-frames:v','1',M],check=True);print(A.out,f"{F:.1f}s",'check:',M)
